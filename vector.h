@@ -27,7 +27,7 @@ P_vector_t* vector_create(
     void (*printElem)(void*))
 {
     P_vector_t* vector = (P_vector_t*) malloc(sizeof(P_vector_t));
-    vector->fields.datas = (void*)malloc(capacity*sizeof(void*));
+    vector->fields.datas = (void**)malloc(capacity*sizeof(void*));
     vector->fields.size = 0;
     vector->fields.capacity = capacity;
     vector->methods.freeElem = freeElem;
@@ -37,7 +37,7 @@ P_vector_t* vector_create(
 void vector_pushBack(P_vector_t* vec, void* data){
     if(vec->fields.size == vec->fields.capacity){
         vec->fields.capacity *= 2;
-        vec->fields.datas = realloc(vec->fields.datas, vec->fields.capacity*sizeof(void*));
+        vec->fields.datas = (void**)realloc(vec->fields.datas, vec->fields.capacity*sizeof(void*));
     }
     vec->fields.datas[vec->fields.size] = data;
     vec->fields.size++;
