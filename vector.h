@@ -93,6 +93,13 @@ void vector_remove(P_vector_t* vec, size_t index){
     vec->fields.size--;
 }
 
+void vector_setCap(P_vector_t* vec, size_t capacity){
+    vec->fields.capacity = capacity;
+    vec->fields.datas = (void**)realloc(vec->fields.datas, vec->fields.capacity*sizeof(void*));
+    if (vec->fields.size > vec->fields.capacity)
+        vec->fields.size = vec->fields.capacity;
+}
+
 void vector_destroy(P_vector_t* vec){
     if (vec->methods.freeElem != NULL)
         for(size_t i = 0; i < vec->fields.size; i++)

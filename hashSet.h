@@ -118,20 +118,22 @@ void rehash(P_hashSet_t* hashSet){
             vector_set(bucket,j,NULL);
             counter++;
         }
+        bucket->fields.size = 0;
+        vector_setCap(bucket,2);
     }
     P_vector_t* first = (P_vector_t*)vector_get(hashSet->fields.table,0);
-    while (hashSet->fields.table->fields.size > 0)
-    {
-        vector_popBack(hashSet->fields.table);
-    }
+    // while (hashSet->fields.table->fields.size > 0)
+    // {
+    //     vector_popBack(hashSet->fields.table);
+    // }
     hashSet->fields.numberOfCollisions = 0;
-    size_t new_cap =hashSet->fields.table->fields.capacity * 2,
-    tmp_num = hashSet->fields.numberOfElements;
+    size_t newCap = hashSet->fields.table->fields.capacity,tmp_num = hashSet->fields.numberOfElements;
     hashSet->fields.numberOfElements = 0;
-    for (size_t i = 0; i < new_cap; i++)
+    for (size_t i = 0; i < newCap; i++)
     {
         vector_pushBack(hashSet->fields.table,vector_create(2,first->methods.freeElem,first->methods.printElem));
     }
+
     for (size_t i = 0; i < tmp_num; i++)
     {
         //assert(arrayOfElement[i] != NULL);
